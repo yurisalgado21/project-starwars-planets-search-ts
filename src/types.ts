@@ -21,3 +21,10 @@ export type TypePlanets = {
   edited: string,
   url: string
 };
+
+export type FormInitialValuesType = {
+  column: 'population' | 'orbital_period' |
+  'diameter' | 'rotation_period' | 'surface_water',
+  operador: string,
+  valueFilter: number,
+};

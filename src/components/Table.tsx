@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import DataContext from '../context/DataContext';
 import { TypePlanets } from '../types';
+import FilterNumerics from './FilterNumerics';
 
 function Table() {
-  const { data, filteredData, handleChange, value } = useContext(DataContext);
+  const { data, filteredData, handleChange, inputValue } = useContext(DataContext);
 
   return (
     <>
@@ -11,9 +12,10 @@ function Table() {
         data-testid="name-filter"
         type="text"
         placeholder="Search"
-        value={ value }
+        value={ inputValue }
         onChange={ handleChange }
       />
+      <FilterNumerics />
       <table>
         <thead>
           <tr>
