@@ -8,6 +8,9 @@ type DataProviderProps = {
 };
 
 function DataProvider({ children }: DataProviderProps) {
+  const valuesProps = ['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water'];
+  const [newValuesProps, setNewValuesProps] = useState<string[]>(valuesProps);
   const [data, setData] = useState<TypePlanets[]>([]);
   const [filteredData, setFilteredData] = useState<TypePlanets[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -28,8 +31,17 @@ function DataProvider({ children }: DataProviderProps) {
     getData();
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<
-  HTMLInputElement>) => {
+  const handleSelect = (event: React.ChangeEvent<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const handleChange = (event:
+  React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     event.preventDefault();
     setInputValue(event.target.value);
     setFilteredData(data.filter((planet: TypePlanets) => (
@@ -37,29 +49,54 @@ function DataProvider({ children }: DataProviderProps) {
     )));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const filteredValuesData = () => {
     const { column, operador, valueFilter } = form;
-    const filter = data.filter((planet: TypePlanets) => {
+    if (filteredData.length === 0) {
       if (operador === 'maior que') {
-        return Number(planet[column]) > Number(valueFilter);
+        setFilteredData(data.filter((planet: TypePlanets) => (
+          Number(planet[column]) > Number(valueFilter)
+        )));
       }
       if (operador === 'menor que') {
-        return Number(planet[column]) < Number(valueFilter);
+        setFilteredData(data.filter((planet: TypePlanets) => (
+          Number(planet[column]) < Number(valueFilter)
+        )));
       }
-      return Number(planet[column]) === Number(valueFilter);
-    });
-    setFilteredData(filter);
+      if (operador === 'igual a') {
+        setFilteredData(data.filter((planet: TypePlanets) => (
+          Number(planet[column]) === Number(valueFilter)
+        )));
+      }
+    }
+    setNewValuesProps(valuesProps.filter((value) => value !== column));
   };
 
-  const handleSelect = (event: React.ChangeEvent<
-  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+  const secondFilteredValuesData = () => {
+    const { column, operador, valueFilter } = form;
+    if (operador === 'maior que') {
+      setFilteredData(filteredData.filter((planet: TypePlanets) => (
+        Number(planet[column]) > Number(valueFilter)
+      )));
+    }
+    if (operador === 'menor que') {
+      setFilteredData(filteredData.filter((planet: TypePlanets) => (
+        Number(planet[column]) < Number(valueFilter)
+      )));
+    }
+    if (operador === 'igual a') {
+      setFilteredData(filteredData.filter((planet: TypePlanets) => (
+        Number(planet[column]) === Number(valueFilter)
+      )));
+    }
+    setNewValuesProps(valuesProps.filter((value) => value !== column));
+  };
+
+  const handleSubmit = () => {
+    if (filteredData.length === 0) {
+      filteredValuesData();
+    } else {
+      secondFilteredValuesData();
+    }
   };
 
   const context = {
@@ -68,6 +105,7 @@ function DataProvider({ children }: DataProviderProps) {
     handleChange,
     inputValue,
     form,
+    newValuesProps,
     handleSubmit,
     handleSelect,
   };

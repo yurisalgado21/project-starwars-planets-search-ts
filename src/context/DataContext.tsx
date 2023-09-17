@@ -4,7 +4,8 @@ import { TypePlanets } from '../types';
 type TypeDataContext = {
   data: TypePlanets[];
   filteredData: TypePlanets[];
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (event:
+  React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
   inputValue: string;
   form: {
     column: 'population' | 'orbital_period' |
@@ -12,7 +13,8 @@ type TypeDataContext = {
     operador: string;
     valueFilter: number;
   }
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  newValuesProps: string[];
+  handleSubmit: () => void;
   handleSelect: (event: React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
 
