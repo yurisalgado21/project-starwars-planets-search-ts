@@ -131,14 +131,15 @@ function DataProvider({ children }: DataProviderProps) {
       setOrdenation({
         order: {
           ...ordenation.order,
-          [name]: value,
+          sort: value as 'ASC' | 'DESC',
         },
       });
     } else if (name === 'column') {
       setOrdenation({
         order: {
           ...ordenation.order,
-          [name]: value,
+          column: value as 'population' | 'orbital_period' |
+          'diameter' | 'rotation_period' | 'surface_water',
         },
       });
     }
