@@ -28,3 +28,9 @@ export type FormInitialValuesType = {
   operador: string,
   valueFilter: number,
 };
+
+export type OrderType = {
+  order: { column: 'population' | 'orbital_period' | 'diameter'
+  | 'rotation_period' | 'surface_water',
+  sort: 'ASC' | 'DESC' }
+};

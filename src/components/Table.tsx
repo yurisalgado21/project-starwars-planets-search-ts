@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 import { TypePlanets } from '../types';
-import FilterNumerics from './FilterNumerics';
 
 function Table() {
   const { data, filteredData } = useContext(DataContext);
@@ -27,7 +26,7 @@ function Table() {
         <tbody>
           {filteredData.length > 0 ? filteredData.map((planet: TypePlanets, index) => (
             <tr key={ index }>
-              <td>{planet.name}</td>
+              <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
               <td>{planet.diameter}</td>
@@ -43,7 +42,7 @@ function Table() {
             </tr>
           )) : data.map((planet: TypePlanets, index) => (
             <tr key={ index }>
-              <td>{planet.name}</td>
+              <td data-testid="planet-name">{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>
               <td>{planet.diameter}</td>

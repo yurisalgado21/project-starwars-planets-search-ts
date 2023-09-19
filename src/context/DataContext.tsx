@@ -14,6 +14,16 @@ type TypeDataContext = {
     valueFilter: number;
   }
   newValuesProps: string[];
+  ordenation: {
+    order: {
+      column: 'population' | 'orbital_period'
+      | 'diameter' | 'rotation_period' | 'surface_water';
+      sort: 'ASC' | 'DESC';
+    }
+  }
+  filtredOrder: () => void;
+  handleOrder: (event: React.ChangeEvent<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void
   handleSubmit: () => void;
   handleSelect: (event: React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
